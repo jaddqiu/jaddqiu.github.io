@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.55.6 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="jadd qiu">
+<meta name="keywords" content="">
+<meta name="description" content="mysql 半同步测试">
+
+
+<meta property="og:description" content="mysql 半同步测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql-semisync 半同步测试">
+<meta name="twitter:title" content="mysql-semisync 半同步测试">
+<meta property="og:url" content="https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+<meta property="twitter:url" content="https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+<meta property="og:site_name" content="Jadd Qiu">
+<meta property="og:description" content="mysql 半同步测试">
+<meta name="twitter:description" content="mysql 半同步测试">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2018-09-03T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2018-09-03T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="mysql">
+    
+  
+  
+    
+      <meta property="article:tag" content="mysql">
+    
+      <meta property="article:tag" content="semisync">
+    
+      <meta property="article:tag" content="半同步">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/7a8baf752b3ee333e4520de5ba68a77d?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/7a8baf752b3ee333e4520de5ba68a77d?s=640">
+
+
+    <title>mysql-semisync 半同步测试</title>
+
+    <link rel="icon" href="https://example.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://example.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://example.org/">Jadd Qiu</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://example.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/7a8baf752b3ee333e4520de5ba68a77d?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://example.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/7a8baf752b3ee333e4520de5ba68a77d?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">jadd qiu</h4>
+        
+          <h5 class="sidebar-profile-bio">忠于理想,直面现实.心之所向,素履以往.</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://example.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://example.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://example.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://example.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://example.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/jaddqiu" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="mailto:jadd1988@gmail.com" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-envelope"></i>
+      
+      <span class="sidebar-button-desc">Gmail</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://example.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      mysql-semisync 半同步测试
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-09-03T00:00:00Z">
+        
+  September 3, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://example.org/categories/mysql">mysql</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>mysql 半同步复制测试</p>
+
+<h1 id="半同步复制测试-基于mysql5-7-14">半同步复制测试(基于MySQL5.7.14)</h1>
+
+<hr />
+
+<h3 id="一-半同步复制setup">一 半同步复制Setup</h3>
+
+<h5 id="variables">Variables</h5>
+
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+<th>Dynamic</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>rpl_semi_sync_master_enabled</td>
+<td>ON</td>
+<td>YES</td>
+</tr>
+
+<tr>
+<td>rpl_semi_sync_master_timeout</td>
+<td>1000</td>
+<td>YES</td>
+</tr>
+
+<tr>
+<td>rpl_semi_sync_master_wait_for_slave_count</td>
+<td>1</td>
+<td>YES</td>
+</tr>
+
+<tr>
+<td>rpl_semi_sync_master_wait_no_slave</td>
+<td>OFF</td>
+<td>YES</td>
+</tr>
+
+<tr>
+<td>rpl_semi_sync_master_wait_point</td>
+<td>AFTER_SYNC</td>
+<td>YES</td>
+</tr>
+
+<tr>
+<td>rpl_semi_sync_slave_enabled</td>
+<td>ON</td>
+<td>YES</td>
+</tr>
+</tbody>
+</table>
+
+<h5 id="配置文件">配置文件</h5>
+
+<pre><code>### 半同步复制
+plugin_load = &quot;rpl_semi_sync_master=semisync_master.so;rpl_semi_sync_slave=semisync_slave.so&quot;
+loose_rpl_semi_sync_master_enabled = 1
+loose_rpl_semi_sync_slave_enabled = 1
+rpl_semi_sync_master_wait_point = AFTER_SYNC
+rpl_semi_sync_master_wait_for_slave_count = 1
+rpl_semi_sync_master_wait_no_slave = OFF
+loose_rpl_semi_sync_master_timeout = 1000
+</code></pre>
+
+<hr />
+
+<h3 id="二-半同步复制性能">二 半同步复制性能</h3>
+
+<ol>
+<li>TPS
+
+<ul>
+<li>TPS在开启半同步复制的情况下低于未开启强持久化配置异步复制的性能, 高于开启强持久化的异步复制</li>
+<li>强持久化指 sync_binlog=1, innodb_flush_log_at_trx_commit=1</li>
+<li>开启半同步复制的情况下, 持久化由主从复制保证, 相当于用未开启强持久化选项的性能实现了基于主从的强持久化</li>
+</ul></li>
+
+<li><p>Latency</p>
+
+<ul>
+<li><p>平均增加响应时长为7ms</p>
+
+<pre><code>mysql&gt; show global status like '%semi%';
++--------------------------------------------+------------+
+| Variable_name                              | Value      |
++--------------------------------------------+------------+
+| Rpl_semi_sync_master_clients               | 1          |
+| Rpl_semi_sync_master_net_avg_wait_time     | 0          |
+| Rpl_semi_sync_master_net_wait_time         | 0          |
+| Rpl_semi_sync_master_net_waits             | 264499     |
+| Rpl_semi_sync_master_no_times              | 1          |
+| Rpl_semi_sync_master_no_tx                 | 23         |
+| Rpl_semi_sync_master_status                | ON         |
+| Rpl_semi_sync_master_timefunc_failures     | 0          |
+| Rpl_semi_sync_master_tx_avg_wait_time      | 7050       |
+| Rpl_semi_sync_master_tx_wait_time          | 1848578007 |
+| Rpl_semi_sync_master_tx_waits              | 262181     |
+| Rpl_semi_sync_master_wait_pos_backtraverse | 0          |
+| Rpl_semi_sync_master_wait_sessions         | 0          |
+| Rpl_semi_sync_master_yes_tx                | 243932     |
++--------------------------------------------+------------+
+14 rows in set (0.30 sec)
+</code></pre></li>
+</ul></li>
+</ol>
+
+<hr />
+
+<h3 id="三-缺陷和隐患">三 缺陷和隐患</h3>
+
+<ol>
+<li>半同步复制每次事务提交需要从库回复binlog已经接收, 需要一次网络确认的操作.  当出现网络抖动的时候, 主库响应客户端的时间会增加rpl_semi_sync_master_timeout的时长.</li>
+<li>生产环境需要保证业务性能, sync_binlog通常不会设置为1, 如果主库服务器出现宕机的情况, 未成功flush binlog的事务会被回滚, 此时从库执行的事务会比主库多.</li>
+</ol>
+
+<hr />
+
+<h3 id="四-生产环境部署建议">四 生产环境部署建议</h3>
+
+<ol>
+<li>依照Setup中进行配置文件配置</li>
+<li>至少有一个从库与主库网络稳定, 低延时. 一主一从的架构下, 主从之间网络稳定且延时低, 最好处于同一个内网.</li>
+<li>做好MySQL状态监控
+
+<ul>
+<li>Rpl_semi_sync_master_clients 应该 &gt;=1</li>
+<li>Rpl_semi_sync_master_no_times 应该 =0, 出现大于0的情况, 可以先通知然后flush 此状态</li>
+<li>Rpl_semi_sync_master_no_tx 应该=0, 出现大于0的情况, 可以先通知然后flush 此状态</li>
+<li>Rpl_semi_sync_master_status 应该为ON</li>
+<li>Rpl_semi_sync_master_tx_avg_wait_time 应该小于一定时间, 不应该超过10到100毫秒</li>
+<li>Rpl_semi_sync_slave_status 所有从库应该为ON</li>
+</ul></li>
+</ol>
+
+<h5 id="status说明">Status说明</h5>
+
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>变量说明</th>
+<th>可被flush重置</th>
+<th>监控方法</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Rpl_semi_sync_master_clients</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><del>Rpl_semi_sync_master_net_avg_wait_time</del></td>
+<td>deprecated</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td><del>Rpl_semi_sync_master_net_wait_time</del></td>
+<td>deprecated</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_net_waits</td>
+<td>主库等待从库回复的总次数</td>
+<td>否</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_no_times</td>
+<td>主库转变为异步复制的次数<br>(Rpl_semi_sync_master_status转变为OFF的次数)</td>
+<td>是</td>
+<td>应该为0</td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_no_tx</td>
+<td>未被从库成功确认binlog已同步的事务数</td>
+<td>是</td>
+<td>应该为0</td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_status</td>
+<td>主库是否处在半同步状态</td>
+<td></td>
+<td>应该为 ON</td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_timefunc_failures</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_tx_avg_wait_time</td>
+<td>master等待半同步从库确认的是平均时间  (us)</td>
+<td>否</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_tx_wait_time</td>
+<td>master等待半同步从库确认的是总时间  (us)</td>
+<td>否</td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_tx_waits</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_wait_pos_backtraverse</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_wait_sessions</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_master_yes_tx</td>
+<td>被从库成功确认binlog已同步的事务数</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>Rpl_semi_sync_slave_status</td>
+<td>从库是否处在半同步状态</td>
+<td></td>
+<td>至少有一个从库为 ON</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h3 id="五-总结">五 总结</h3>
+
+<ol>
+<li>mysql5.7半同步复制可以在性能 (tps, latency) 接近异步复制(不开启强持久性)的情况下 提供 loss-less replication, 确保主从一致性</li>
+<li>半同步复制必须存在至少一个低延时的开启半同步复制的从库, 如果网络延迟高或抖动, 会严重影响业务响应时间和TPS</li>
+</ol>
+
+<hr />
+
+<h3 id="参考链接">参考链接</h3>
+
+<pre><code>https://mysqlhighavailability.com/semi-synchronous-replication-performance-in-mysql-5-7/
+http://yoshinorimatsunobu.blogspot.co.uk/2014/04/semi-synchronous-replication-at-facebook.html
+http://keithlan.github.io/2016/06/29/lossless_repl/
+https://www.cnblogs.com/ivictor/p/5735580.html
+http://mysql.taobao.org/monthly/2017/04/01/
+http://my-replication-life.blogspot.com/2013/09/loss-less-semi-synchronous-replication.html
+</code></pre>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://example.org/tags/mysql/">mysql</a>
+
+  <a class="tag tag--primary tag--small" href="https://example.org/tags/semisync/">semisync</a>
+
+  <a class="tag tag--primary tag--small" href="https://example.org/tags/%E5%8D%8A%E5%90%8C%E6%AD%A5/">半同步</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/09/golang-proverbs/" data-tooltip="Golang proverbs">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2017/03/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4/" data-tooltip="MySQL数据库拆分操作步骤">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2019 jadd qiu. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/09/golang-proverbs/" data-tooltip="Golang proverbs">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2017/03/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4/" data-tooltip="MySQL数据库拆分操作步骤">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fexample.org%2F2018%2F09%2Fmysql-semisync-%25E5%258D%258A%25E5%2590%258C%25E6%25AD%25A5%25E6%25B5%258B%25E8%25AF%2595%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fexample.org%2F2018%2F09%2Fmysql-semisync-%25E5%258D%258A%25E5%2590%258C%25E6%25AD%25A5%25E6%25B5%258B%25E8%25AF%2595%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fexample.org%2F2018%2F09%2Fmysql-semisync-%25E5%258D%258A%25E5%2590%258C%25E6%25AD%25A5%25E6%25B5%258B%25E8%25AF%2595%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/7a8baf752b3ee333e4520de5ba68a77d?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">jadd qiu</h4>
+    
+      <div id="about-card-bio">忠于理想,直面现实.心之所向,素履以往.</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Golang/Python
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        ShenZhen
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://example.org/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://example.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/example.org\/2018\/09\/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95\/';
+          
+            this.page.identifier = '\/2018\/09\/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'jaddqiu';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

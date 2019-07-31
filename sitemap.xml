@@ -3,17 +3,93 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://example.org/categories/</loc>
+    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://example.org/2018/09/golang-proverbs/</loc>
+    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.org/</loc>
+    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://example.org/post/</loc>
+    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/tags/</loc>
+    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/categories/golang/</loc>
+    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/tags/golang/</loc>
+    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/categories/mysql/</loc>
+    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/tags/mysql/</loc>
+    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/</loc>
+    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.org/tags/semisync/</loc>
+    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/tags/%E5%8D%8A%E5%90%8C%E6%AD%A5/</loc>
+    <lastmod>2018-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/2017/03/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4/</loc>
+    <lastmod>2017-03-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.org/tags/%E6%8B%86%E5%88%86/</loc>
+    <lastmod>2017-03-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/about/</loc>
+    <lastmod>2014-04-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.org/archives/</loc>
     <priority>0</priority>
   </url>
   
