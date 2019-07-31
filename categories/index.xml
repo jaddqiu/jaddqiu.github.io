@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Jadd Qiu</title>
-    <link>https://example.org/categories/</link>
+    <link>https://jaddqiu.github.io/categories/</link>
     <description>Recent content in Categories on Jadd Qiu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 23 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://example.org/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jaddqiu.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>golang</title>
-      <link>https://example.org/categories/golang/</link>
+      <link>https://jaddqiu.github.io/categories/golang/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://example.org/categories/golang/</guid>
+      <guid>https://jaddqiu.github.io/categories/golang/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mysql</title>
-      <link>https://example.org/categories/mysql/</link>
+      <link>https://jaddqiu.github.io/categories/mysql/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://example.org/categories/mysql/</guid>
+      <guid>https://jaddqiu.github.io/categories/mysql/</guid>
       <description></description>
     </item>
     

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>golang on Jadd Qiu</title>
-    <link>https://example.org/tags/golang/</link>
+    <link>https://jaddqiu.github.io/tags/golang/</link>
     <description>Recent content in golang on Jadd Qiu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 23 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://example.org/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jaddqiu.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Golang proverbs</title>
-      <link>https://example.org/2018/09/golang-proverbs/</link>
+      <link>https://jaddqiu.github.io/2018/09/golang-proverbs/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://example.org/2018/09/golang-proverbs/</guid>
+      <guid>https://jaddqiu.github.io/2018/09/golang-proverbs/</guid>
       <description>&lt;p&gt;Golang proverbs from Rob Pike. 时常看看, 温故而知新.&lt;/p&gt;</description>
     </item>
     
