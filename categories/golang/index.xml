@@ -6,10 +6,19 @@
     <description>Recent content in golang on Jadd Qiu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 23 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Oct 2018 13:31:54 +0800</lastBuildDate>
     
 	<atom:link href="https://jaddqiu.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Golang Struct Anonymous Fileds</title>
+      <link>https://jaddqiu.github.io/2018/10/golang-struct-anonymous-fileds/</link>
+      <pubDate>Wed, 03 Oct 2018 13:31:54 +0800</pubDate>
+      
+      <guid>https://jaddqiu.github.io/2018/10/golang-struct-anonymous-fileds/</guid>
+      <description>&lt;p&gt;Golang anonymous struct field example .&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Golang proverbs</title>
