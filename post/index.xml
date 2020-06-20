@@ -17,16 +17,7 @@
       <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://jaddqiu.github.io/2020/06/docker%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</guid>
-      <description>docker 编译安装 前言 在学习和使用docker和kubernates一段时间之后，想看看docker和kubernates的源码来学习一下docker和kubernates的核心特性是如何实现的。首先想到的就是clone下来源码，然后用vscode看代码和进行debug。这篇文章就是关于docker源码安装的步骤和如何解决遇到的问题的。
-docker,docker-ee,docker-ce and moby 在进行docker源码安装的过程中，首先google了一下其他人源码安装的文章。
-目前2020-06, 网上很多关于docker源码安装的文章是基于老的 docker 仓库进行build的，目前访问 docker 会被重定向到 moby but what is moby？
-根据官方文档说明 moby作为docker的upstream， 和docker的关系就像 fedora对rhel的关系。docker目前由docker公司单独维护，而moby被用作docker的rd lab。 此外docker-ee和docker-ce的关系就像是rhel和centos的关系。
-build步骤 docker-ce build时需要docker和golang。 对，构建docker需要docker，应该是构建docker需要的依赖比较多，直接在docker中编译比较简单，但是这样没法使用IDE调试，只能使用delve或者gdb进行调试。
-之后会研究下Makefile, 如果可以直接源码编译，用IDE调试还是方便很多。
- 安装docker
-curl -fsSL https://get.docker.com | bash -s  安装golang
-wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz tar -zxf go1.14.4.linux-amd64.tar.gz -C /usr/local/ mv /usr/local/go /usr/local/go1.14.4 ln -sfT /usr/local/go1.14.4 /usr/local/go  配置go工作环境 在 ~/.bashrc 中间 添加
-export GOPATH=~/go export GOBIN=$GOPATH/bin export GOROOT=/usr/local/go export PATH=/usr/local/go/bin:$GOPATH/bin:$PATH  source ~/.</description>
+      <description>&lt;p&gt;docker编译安装过程与问题处理 &amp;hellip;&lt;/p&gt;</description>
     </item>
     
     <item>
