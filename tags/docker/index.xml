@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Jadd Qiu</title>
-    <link>https://jaddqiu.github.io/post/</link>
-    <description>Recent content in Posts on Jadd Qiu</description>
+    <title>docker on Jadd Qiu</title>
+    <link>https://jaddqiu.github.io/tags/docker/</link>
+    <description>Recent content in docker on Jadd Qiu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 19 Jun 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://jaddqiu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jaddqiu.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -27,42 +27,6 @@ build步骤 docker-ce build时需要docker和golang。 对，构建docker需要d
 curl -fsSL https://get.docker.com | bash -s  安装golang
 wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz tar -zxf go1.14.4.linux-amd64.tar.gz -C /usr/local/ mv /usr/local/go /usr/local/go1.14.4 ln -sfT /usr/local/go1.14.4 /usr/local/go  配置go工作环境 在 ~/.bashrc 中间 添加
 export GOPATH=~/go export GOBIN=$GOPATH/bin export GOROOT=/usr/local/go export PATH=/usr/local/go/bin:$GOPATH/bin:$PATH  source ~/.</description>
-    </item>
-    
-    <item>
-      <title>Golang Struct Anonymous Fileds</title>
-      <link>https://jaddqiu.github.io/2018/10/golang-struct-anonymous-fileds/</link>
-      <pubDate>Wed, 03 Oct 2018 13:31:54 +0800</pubDate>
-      
-      <guid>https://jaddqiu.github.io/2018/10/golang-struct-anonymous-fileds/</guid>
-      <description>&lt;p&gt;Golang anonymous struct field example .&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Golang proverbs</title>
-      <link>https://jaddqiu.github.io/2018/09/golang-proverbs/</link>
-      <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://jaddqiu.github.io/2018/09/golang-proverbs/</guid>
-      <description>&lt;p&gt;Golang proverbs from Rob Pike. 时常看看, 温故而知新.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>mysql-semisync 半同步测试</title>
-      <link>https://jaddqiu.github.io/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/</link>
-      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://jaddqiu.github.io/2018/09/mysql-semisync-%E5%8D%8A%E5%90%8C%E6%AD%A5%E6%B5%8B%E8%AF%95/</guid>
-      <description>&lt;p&gt;mysql 半同步复制测试&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>MySQL数据库拆分操作步骤</title>
-      <link>https://jaddqiu.github.io/2017/03/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4/</link>
-      <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://jaddqiu.github.io/2017/03/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4/</guid>
-      <description>&lt;p&gt;随着业务发展, 混合部署在同一个实例的不同业务库需要拆分 &amp;hellip;&lt;/p&gt;</description>
     </item>
     
   </channel>
